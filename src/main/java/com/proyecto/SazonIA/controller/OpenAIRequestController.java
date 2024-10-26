@@ -7,7 +7,6 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import com.proyecto.SazonIA.dto.OpenAIRequestDTO;
-import com.proyecto.SazonIA.dto.UserDTO;
 import com.proyecto.SazonIA.service.OpenAIRequestService;
 
 @Controller
