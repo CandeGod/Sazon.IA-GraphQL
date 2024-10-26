@@ -1,50 +1,23 @@
 package com.proyecto.SazonIA.controller;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.proyecto.SazonIA.spoonacularApi.ApiRecipe;
 import com.proyecto.SazonIA.service.ApiRecipeService;
+import com.proyecto.SazonIA.spoonacularApi.ApiRecipe;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-@RestController
-@Tag(name = "Api spoonacular", description = "Operations related to the spoonacular api")
+@Controller
 public class ApiRecipeController {
 
-    @Autowired
-    private ApiRecipeService apiRecipeService;
+    private final ApiRecipeService apiRecipeService;
 
-    @Operation(summary = "Get a random recipe")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Random recipe found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiRecipe.class))),
-            @ApiResponse(responseCode = "404", description = "No recipe found", content = @Content)
-    })
-    @GetMapping("/random-recipe")
-    public ResponseEntity<ApiRecipe> getRandomRecipe() {
-        ApiRecipe randomRecipe = apiRecipeService.getRandomRecipe();
-        if (randomRecipe != null) {
-            return new ResponseEntity<>(randomRecipe, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @Autowired
+    public ApiRecipeController(ApiRecipeService apiRecipeService) {
+        this.apiRecipeService = apiRecipeService;
+    }
+
+    @QueryMapping
+    public ApiRecipe getRandomRecipe() {
+        return apiRecipeService.getRandomRecipe();
     }
 }
-
-
-
-
-
-
-
-
-
