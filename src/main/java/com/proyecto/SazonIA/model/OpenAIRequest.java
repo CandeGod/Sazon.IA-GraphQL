@@ -7,10 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-
+@Getter
+@Setter
 @Entity
 public class OpenAIRequest{
     @Id
@@ -29,38 +32,6 @@ public class OpenAIRequest{
     private String recommendations;
     @Column(name = "requestDate", nullable = false)
     private LocalDate requestDate;
-
-    
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-    public String getPrompt() {
-        return prompt;
-    }
-    public void setPrompt(String prompt) {
-        this.prompt = prompt;
-    }
-    public String getRecommendations() {
-        return recommendations;
-    }
-    public void setRecommendations(String recommendations) {
-        this.recommendations = recommendations;
-    }
-    public LocalDate getRequestDate() {
-        return requestDate;
-    }
-    public void setRequestDate(LocalDate requestDate) {
-        this.requestDate = requestDate;
-    }
 
 
     
