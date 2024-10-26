@@ -32,17 +32,20 @@ public class FollowerController {
     }
 
     @MutationMapping
-public String followUser(@Argument(value = "follower") FollowerDTO followerDTO) {
-    if (followerDTO == null) {
-        return "FollowerDTO is null";
-    }
+    public String followUser(@Argument(value = "follower") FollowerDTO followerDTO) {
+        if (followerDTO == null) {
+            return "FollowerDTO is null";
+        }
         User follower = service.findUserById(followerDTO.getUserId());
         User followed = service.findUserById(followerDTO.getFollowedId());
 
-        if (follower == null || followed == null) return "User not found";
-        if (service.isFollowing(follower, followed)) return "Already following";
-        if (follower.equals(followed)) return "You cannot follow yourself";
-        
+        if (follower == null || followed == null)
+            return "User not found";
+        if (service.isFollowing(follower, followed))
+            return "Already following";
+        if (follower.equals(followed))
+            return "You cannot follow yourself";
+
         service.followUser(follower, followed);
         return "User followed successfully";
     }
@@ -52,10 +55,12 @@ public String followUser(@Argument(value = "follower") FollowerDTO followerDTO) 
         User follower = service.findUserById(followerDTO.getUserId());
         User followed = service.findUserById(followerDTO.getFollowedId());
 
-        if (follower == null || followed == null) return "User not found";
-        if (follower.equals(followed)) return "You cannot unfollow yourself";
-        if (!service.isFollowing(follower, followed)) return "Not following";
-        
+        if (follower == null || followed == null)
+            return "User not found";
+        if (follower.equals(followed))
+            return "You cannot unfollow yourself";
+        if (!service.isFollowing(follower, followed))
+            return "Not following";
 
         service.unfollowUser(follower, followed);
         return "User unfollowed successfully";
