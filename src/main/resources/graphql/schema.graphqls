@@ -8,7 +8,7 @@ type Query {
     getFollowing(userId: Int!): [Follower]
     getAllRequests: [OpenAIRequest]
     getHistoryByUserId(userId: Int!): [OpenAIRequest]
-    
+    getRandomRecipe: ApiRecipe
 }
 
 type Mutation {
@@ -44,4 +44,53 @@ type OpenAIRequest {
 input FollowerDTO {
     userId: Int!
     followedId: Int!
+}
+
+#Para la consulta aleatoria de la api spoonacular
+type ApiRecipe {
+    id: ID!
+    title: String
+    image: String
+    readyInMinutes: Int
+    cookingMinutes: Int
+    preparationMinutes: Int
+    sourceName: String
+    sourceUrl: String
+    spoonacularSourceUrl: String
+    servings: Int
+    extendedIngredients: [ApiIngredientsRecipe]
+    summary: String
+    winePairing: ApiWinePairingRecipe
+}
+
+type ApiIngredientsRecipe {
+    name: String
+    amount: Float
+    unit: String
+    original: String
+    measures: ApiMeasuresRecipe
+    consistency: String
+    meta: [String]
+}
+
+type ApiMeasuresRecipe {
+    metric: ApiMetricRecipe
+    us: ApiUsRecipe
+}
+
+type ApiMetricRecipe {
+    amount: Float
+    unitLong: String
+    unitShort: String
+}
+
+type ApiUsRecipe {
+    amount: Float
+    unitLong: String
+    unitShort: String
+}
+
+type ApiWinePairingRecipe {
+    pairedWines: [String]
+    pairingText: String
 }
