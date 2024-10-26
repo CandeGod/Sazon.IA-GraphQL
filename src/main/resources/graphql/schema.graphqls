@@ -6,11 +6,16 @@ schema {
 type Query {
     getFollowers(userId: Int!): [Follower]
     getFollowing(userId: Int!): [Follower]
+    getAllRequests: [OpenAIRequest]
+    getHistoryByUserId(userId: Int!): [OpenAIRequest]
+    
 }
 
 type Mutation {
     followUser(follower: FollowerDTO!): String
     unfollowUser(follower: FollowerDTO!): String
+    getRecommendations(userId: Int!, prompt: String!): String
+    deleteHistoryById(userId: Int!): String
 }
 
 type Follower {
@@ -26,6 +31,14 @@ type User {
     birthdate: String!
     phoneNumber: String!
     email: String!
+}
+
+type OpenAIRequest {
+    id: ID!
+    userId: Int!
+    prompt: String!
+    recommendations: String!
+    requestDate: String!
 }
 
 input FollowerDTO {
