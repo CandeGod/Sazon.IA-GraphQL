@@ -6,16 +6,16 @@ schema {
 type Query {
     getFollowers(userId: Int!): [Follower]
     getFollowing(userId: Int!): [Follower]
-    getAllRequests: [OpenAIRequest]
-    getHistoryByUserId(userId: Int!): [OpenAIRequest]
+    getAllRecommendationsChatBot: [OpenAIRequest]
+    getRecomendationsChatBotByUserId(userId: Int!): [OpenAIRequest]
     getRandomRecipe: ApiRecipe
 }
 
 type Mutation {
     followUser(follower: FollowerDTO!): String
     unfollowUser(follower: FollowerDTO!): String
-    getRecommendations(userId: Int!, prompt: String!): String
-    deleteHistoryById(userId: Int!): String
+    generateRecommendationChatBot(userId: Int!, prompt: String!): String
+    deleteHistoryChatBotByUserId(userId: Int!): String
 }
 
 type Follower {

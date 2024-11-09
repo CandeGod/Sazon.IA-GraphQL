@@ -20,7 +20,7 @@ public class OpenAIRequestController {
     }
 
     @MutationMapping
-    public String getRecommendations(@Argument Integer userId, @Argument String prompt) {
+    public String generateRecommendationChatBot(@Argument Integer userId, @Argument String prompt) {
         if (!openAIRequestService.userExists(userId)) {
             throw new RuntimeException("User not found");
         }
@@ -28,7 +28,7 @@ public class OpenAIRequestController {
     }
 
     @QueryMapping
-    public List<OpenAIRequestDTO> getAllRequests() {
+    public List<OpenAIRequestDTO> getAllRecommendationsChatBot() {
         return openAIRequestService.getAll().stream()
                 .map(request -> new OpenAIRequestDTO(request.getId(), request.getUser().getUserId(),
                         request.getPrompt(), request.getRecommendations(), request.getRequestDate()))
@@ -36,7 +36,7 @@ public class OpenAIRequestController {
     }
 
     @QueryMapping
-    public List<OpenAIRequestDTO> getHistoryByUserId(@Argument Integer userId) {
+    public List<OpenAIRequestDTO> getRecomendationsChatBotByUserId(@Argument Integer userId) {
         if (!openAIRequestService.userExists(userId)) {
             throw new RuntimeException("User not found");
         }
@@ -47,7 +47,7 @@ public class OpenAIRequestController {
     }
 
     @MutationMapping
-    public String deleteHistoryById(@Argument Integer userId) {
+    public String deleteHistoryChatBotByUserId(@Argument Integer userId) {
         if (!openAIRequestService.userExists(userId)) {
             throw new RuntimeException("User not found");
         }
