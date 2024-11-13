@@ -9,6 +9,16 @@ type Query {
     getAllRecommendationsChatBot: [OpenAIRequest]
     getRecomendationsChatBotByUserId(userId: Int!): [OpenAIRequest]
     getRandomRecipe: ApiRecipe
+
+
+    getRandomPosts(count: Int!): [Post]
+    getPostById(postId: String!): Post
+    getPostsByUser(userId: Int!, page: Int!, pageSize: Int!): [Post]
+    getCommentsByPostIdWithPagination(postId: String!, page: Int!, pageSize: Int!): [CommentPost]
+    getFavoritePostsByUserId(userId: Int!, page: Int!, pageSize: Int!): [FavoritePost]
+    getContentFavoritePostByUserIdAndPostId(userId: Int!, postId: String!): Post
+    getRatingPostById(ratingId: String!): RatingPost
+    getRatingCommentById(ratingId: String!): RatingCommentPost
 }
 
 type Mutation {
@@ -16,6 +26,21 @@ type Mutation {
     unfollowUser(follower: FollowerDTO!): String
     generateRecommendationChatBot(userId: Int!, prompt: String!): String
     deleteHistoryChatBotByUserId(userId: Int!): String
+
+    createPost(userId: Int!, title: String!, content: String!): Post
+    updatePost(postId: String!, title: String, content: String): Post
+    deletePost(postId: String!): String
+    addCommentPost(postId: String!, comment: CommentPostInput!): CommentPost
+    editCommentPost(postId: String!, commentId: String!, content: String!): CommentPost
+    deleteCommentPost(postId: String!, commentId: String!): String
+    saveFavoritePost(userId: Int!, postId: String!): FavoritePost
+    removeFavoritePost(userId: Int!, postId: String!): String
+    createRatingPost(postId: String!, userId: Int!, value: Int!): RatingPost
+    updateRatingPost(ratingId: String!, value: Int!): RatingPost
+    deleteRatingPost(ratingId: String!): Boolean
+    createRatingComment(commentId: String!, userId: Int!, value: Int!): RatingCommentPost
+    updateRatingComment(ratingId: String!, value: Int!): RatingCommentPost
+    deleteRatingComment(ratingId: String!): Boolean
 }
 
 type Follower {
@@ -93,4 +118,55 @@ type ApiUsRecipe {
 type ApiWinePairingRecipe {
     pairedWines: [String]
     pairingText: String
+}
+
+
+type Post {
+  postId: String
+  userId: Int
+  title: String
+  content: String
+  postDate: String
+  ratingAverage: Int
+}
+
+type CommentPost {
+  commentId: String
+  postId: String
+  userId: Int
+  content: String
+  commentDate: String
+}
+
+# Definición del tipo FavoritePost
+type FavoritePost {
+  favoritePostId: FavoritePostId
+  createdAt: String
+}
+
+# Definición del tipo FavoritePostId, que contiene los identificadores de la publicación y el usuario
+type FavoritePostId {
+  postId: String
+  userId: Int
+}
+
+
+type RatingPost {
+  ratingId: String
+  postId: String
+  userId: Int
+  value: Int
+}
+
+
+type RatingCommentPost {
+  ratingId: String
+  commentId: String
+  userId: Int
+  value: Int
+}
+
+input CommentPostInput {
+  userId: Int!
+  content: String!
 }
